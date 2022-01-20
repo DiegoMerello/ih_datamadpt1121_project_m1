@@ -9,7 +9,7 @@ import geopandas as gpd
 import sys
 import argparse
 
-parser = argparse.ArgumentParser()
+parser = argparse.ArgumentParser() #al igual que ls y mkdir, 
 parser.add_argument(
     "--value",
     dest = "value",

@@ -1,8 +1,6 @@
 <p align="left"><img src="https://cdn-images-1.medium.com/max/184/1*2GDcaeYIx_bQAZLxWM4PsQ@2x.png"></p>
 
-# __ih_datamadpt1121_project_m1__
-
-Ironhack Madrid - Data Analytics Part Time - November 2021 - Project Module 1
+# __ih_datamadpt1121_project_m1__Diego Merello
 
 ## **Data:**
 
@@ -13,63 +11,37 @@ There are 2 main datasources:
 Server name:   sqlironhack
 Database:      BiciMAD
 ```
-> __IMPORTANT =>__ Username and password will be provided in class.
+>The obtained data reveal all BiciMad stations (coordinates locations, availability) from Madrid (Spain)
 
+- **API REST.** We will use the API REST from the [Portal de datos abiertos del Ayuntamiento de Madrid](https://datos.madrid.es/nuevoMadrid/swagger-ui-master-2.2.10/dist/index.html?url=/egobfiles/api.datos.madrid.es.json#/), 
 
-- **API REST.** We will use the API REST from the [Portal de datos abiertos del Ayuntamiento de Madrid](https://datos.madrid.es/nuevoMadrid/swagger-ui-master-2.2.10/dist/index.html?url=/egobfiles/api.datos.madrid.es.json#/), where you can find the __Catálogo de datos__ with more than 70 datasets.
-
-> __IMPORTANT =>__ Specific datasets will be assigned to each student in order to perform the challenges.
+> Sport centre table and location from Madrid city free data
 
 
 ---
 
 ## **Main Challenge:**
 
-You must create a Python App (**Data Pipeline**) that allow their potential users to find the nearest BiciMAD station to a set of places of interest. The output table should look similar to:
+Firstly, data of sports centres is cleaned. Useless columns are dropped. 
+Secondly, values from address.street-address are transformed into string, then every word is capitalized
+Since I had NaN values at certain columns I've dropped them to have no probs
+I renamed columns since they are going to be my start point just to make them prettier and applied function to covert 2D points into mercator projection
 
-| Place of interest | Type of place (*) | Place address | BiciMAD station | Station location |
-|---------|----------|-------|------------|----------|
-| Auditorio Carmen Laforet (Ciudad Lineal)   | Centros Culturales | Calle Jazmin, 46 | Legazpi | Calle Bolívar, 3 |
-| Centro Comunitario Casino de la Reina | Centros municipales de enseñanzas artísticas | Calle Casino, 3 | Chamartin | Calle Rodríguez Jaén, 40 |
-| ...     | ...            | ...        | ...      | ...        |
-> __(*)__ There is a list of datasets each one with different places. A specific dataset will be assigned to each student. 
+Data from BiciMAD is cleand dropping useless columns, lamba function is applied to split up values from one column, additionally, integres are converted into float numbers since it was needed.
+Following same reasony as above, I converted 2D coordinates into mercator coordinates
 
+Both datasets are merged into one, so every location is crossed with every BiciMAD Station.
+Columns are renamed to specific output. And a new column is inserted with the type of place.
 
-**Your project must meet the following requirements:**
+## **Output**
 
-- It must be contained in a GitHub repository which includes a README file that explains the aim and content of your code. You may follow the structure suggested [here](https://github.com/potacho/data-project-template).
+There are two option:
 
-- It must create, at least, a `.csv` file including the requested table (i.e. Main Challenge). Alternatively, you may create an image, pdf, plot or any other output format that you may find convenient. You may also send your output by e-mail, upload it to a cloud repository, etc. 
+1. With one specific Place of Interest, the closest BiciMAD station is found
+2. The closest BiciMAD station to every Place of Interest 
+3. At Visual Studio Code, a pipeline is created and with the argparse function. By default is ask the closest station to a specific Place of Interest.
 
-- It must provide, at least, two options for the final user to select when executing using `argparse`: **(1)** To get the table for every 'Place of interest' included in the dataset (or a set of them), **(2)** To get the table for a specific 'Place of interest' imputed by the user.
-
-**Additionally:**
-
-- You must prepare a 4 minutes presentation (ppt, canva, etc.) to explain your project (Instructors will provide further details about the content of the presentation).
-
-- The last slide of your presentation must include your candidate for the **'Ironhack Data Code Beauty Pageant'**. 
-
-
----
-
-### **Bonus 1:**
-
-You may include in your table the availability of bikes in each station.
-
----
-
-### **Bonus 2:**
-
-You may improve the usability of your app by using [FuzzyWuzzy](https://pypi.org/project/fuzzywuzzy/).
-
----
-
-### **Bonus 3:**
-
-Feel free to enrich your output data with any data you may find relevant (e.g.: wiki info for every place of interest).
-
---- 
-
+ 
 ## **Project Main Stack**
 
 - [Azure SQL Database](https://portal.azure.com/)
